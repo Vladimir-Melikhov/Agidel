@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Агидель</h1>
+    <section>
+        <h2>оставить заявку</h2>
+        <form method='post' novalidate>
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+
+            <div>
+                <label>Ваше имя:</label><br>
+                {{ form.name }}
+                {{ form.name.errors }}
+            </div>
+
+            <div>
+                <label>Телефон:</label><br>
+                {{ form.phone_number }}
+                {{ form.phone_number.errors }}
+            </div>
+
+            <div style="background: #f4f4f4; padding: 10px; margin: 10px 0;">
+                <label>Связаться в мессенджере? {{ form.use_messenger }}</label>
+                
+                <div id="messenger-logic" style="display: none; margin-top: 10px; border-left: 2px solid #ccc; padding-left: 10px;">
+                    <p>Выберите мессенджер: {{ form.messenger }}</p>
+                    {{ form.messenger.errors }}
+                
+                    <div id="field-whatsapp" style="display: none;">
+                        <p>WhatsApp (номер): {{ form.whatsapp }}</p>
+                        {{ form.whatsapp.errors }}
+                    </div>
+                
+                    <div id="field-telegram" style="display: none;">
+                        <p>Telegram (ник): {{ form.telegram }}</p>
+                        {{ form.telegram.errors }}
+                    </div>
+                
+                    <div id="field-max" style="display: none;">
+                        <p>Max (данные): {{ form.max_m }}</p>
+                        {{ form.max_m.errors }}
+                    </div>
+                </div>
+            </div>
+            <button type="submit">Отправить</button>
+        </form>
+    </section> 
+
+    <section>
+        {% for item in object_list %}
+        <div class="action-card">
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.description }}</p>
+            {% if item.image %}
+                <img src="{{ item.image.url }}" alt="">
+            {% endif %}
+        </div>
+    {% empty %}
+        <p>Список акций пуст.</p>
+    {% endfor %}
+        
+    </section>
+
+
+
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkbox = document.querySelector('input[name="use_messenger"]');
+            const messengerSelect = document.querySelector('select[name="messenger"]');
+            const logicBlock = document.getElementById('messenger-logic');
+            
+            const fields = {
+                whatsapp: document.getElementById('field-whatsapp'),
+                telegram: document.getElementById('field-telegram'),
+                max: document.getElementById('field-max')
+            };
+        
+            function updateVisibility() {
+                if (checkbox.checked) {
+                    logicBlock.style.display = 'block';
+                    
+                    // 2. Скрываем все поля мессенджеров перед тем как показать нужное
+                    Object.values(fields).forEach(el => el.style.display = 'none');
+                    
+                    // 3. Показываем только то поле, которое выбрано в Select
+                    const selected = messengerSelect.value;
+                    if (fields[selected]) {
+                        fields[selected].style.display = 'block';
+                    }
+                } else {
+                    logicBlock.style.display = 'none';
+                }
+            }
+        
+            checkbox.addEventListener('change', updateVisibility);
+            messengerSelect.addEventListener('change', updateVisibility);
+            
+            updateVisibility();
+        });
+        </script>
+
+{% endblock %}
