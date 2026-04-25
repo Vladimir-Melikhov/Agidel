@@ -1,0 +1,173 @@
+<style>
+    .site-header {
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        z-index: 100;
+        padding: 20px 40px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .header-logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+    }
+    .header-logo img {
+        width: 36px; height: 36px;
+        object-fit: contain;
+        filter: drop-shadow(0 2px 6px rgba(0,0,0,0.18));
+    }
+    .header-logo span {
+        font-family: 'Nunito', sans-serif;
+        font-weight: 900;
+        font-size: 1.25rem;
+        color: white;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+    .header-contacts {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .header-contact {
+        font-family: 'Nunito', sans-serif;
+        font-weight: 700;
+        font-size: 0.82rem;
+        color: rgba(255,255,255,0.75);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+    .header-contact:hover { color: var(--yellow); }
+    .header-contact-sep {
+        color: rgba(255,255,255,0.3);
+        font-size: 0.9rem;
+    }
+
+    .header-nav {
+        display: flex;
+        gap: 4px;
+    }
+    .header-nav a {
+        font-family: 'Nunito', sans-serif;
+        font-weight: 800;
+        font-size: 0.85rem;
+        color: rgba(255,255,255,0.85);
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        padding: 8px 16px;
+        border-radius: 20px;
+        transition: all 0.2s;
+    }
+    .header-nav a:hover {
+        background: rgba(255,255,255,0.15);
+        color: var(--yellow);
+    }
+    .mobile-toggle {
+        display: none;
+        background: rgba(255,255,255,0.15);
+        border: none;
+        border-radius: 12px;
+        padding: 8px;
+        cursor: pointer;
+        color: white;
+    }
+    .mobile-menu {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: var(--dark);
+        z-index: 300;
+        padding: 40px;
+        flex-direction: column;
+        gap: 24px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+        font-family: 'Nunito', sans-serif;
+        font-weight: 900;
+        font-size: 2rem;
+        color: white;
+        text-decoration: none;
+        text-transform: uppercase;
+    }
+    .mobile-menu a:hover { color: var(--yellow); }
+    .mobile-menu-contacts {
+        margin-top: auto;
+        padding-top: 24px;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    .mobile-menu-contacts a,
+    .mobile-menu-contacts span {
+        font-family: 'Nunito', sans-serif;
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: rgba(255,255,255,0.55);
+        text-decoration: none;
+        text-transform: none;
+        font-size: 0.9rem;
+    }
+    .mobile-menu-contacts a:hover { color: var(--yellow); }
+    .mobile-close {
+        align-self: flex-end;
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+        margin-bottom: 20px;
+    }
+
+    @media (max-width: 768px) {
+        .site-header { padding: 16px 20px; }
+        .header-nav { display: none; }
+        .header-contacts { display: none; }
+        .mobile-toggle { display: block; }
+    }
+</style>
+
+<div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-close" onclick="document.getElementById('mobileMenu').classList.remove('open')">
+        <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+    </button>
+    <a href="#hero"     onclick="document.getElementById('mobileMenu').classList.remove('open')">Главная</a>
+    <a href="#about"    onclick="document.getElementById('mobileMenu').classList.remove('open')">О нас</a>
+    <a href="#services" onclick="document.getElementById('mobileMenu').classList.remove('open')">Услуги</a>
+    <a href="#promo"    onclick="document.getElementById('mobileMenu').classList.remove('open')">Акции</a>
+    <a href="#form"     onclick="document.getElementById('mobileMenu').classList.remove('open')">Записаться</a>
+
+    <div class="mobile-menu-contacts">
+        <a href="tel:+79067756677">+7 906 775 66 77</a>
+        <span>г. Реутов, Юбилейный пр., д. 59, пом. 5</span>
+    </div>
+</div>
+
+<header class="site-header">
+    <a href="#hero" class="header-logo">
+        <img src="/static/img/utka.png" alt="Уточка">
+        <span>Агидель</span>
+    </a>
+    <div class="header-contacts">
+        <a href="tel:+79067756677" class="header-contact">+7 906 775 66 77</a>
+        <span class="header-contact-sep">·</span>
+        <a href="https://yandex.ru/maps/?text=Реутов+Юбилейный+59" target="_blank" class="header-contact">г. Реутов, Юбилейный пр., 59</a>
+    </div>
+    <nav class="header-nav">
+        <a href="#about">О нас</a>
+        <a href="#services">Услуги</a>
+        <a href="#promo">Акции</a>
+        <a href="#form">Записаться</a>
+    </nav>
+    <button class="mobile-toggle" onclick="document.getElementById('mobileMenu').classList.toggle('open')">
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path d="M4 6h16M4 12h16m-7 6h7"/>
+        </svg>
+    </button>
+</header>

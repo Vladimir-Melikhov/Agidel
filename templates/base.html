@@ -1,12 +1,35 @@
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
-  </head>
-  <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Аквастудия АГИДЕЛЬ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --blue:   #87CCE8;
+            --dark:   #0C6880;
+            --yellow: #FCE300;
+            --orange: #F08518;
+            --bg:     #F8FDFF;
+            --white:  #ffffff;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Nunito Sans', sans-serif;
+            background: var(--bg);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+    </style>
+</head>
+<body>
     {% include "includes/header.html" %}
-    <main>
-      {% block content %}{% endblock %}
-    </main>
+    <main>{% block content %}{% endblock %}</main>
     {% include "includes/footer.html" %}
-  </body>
+</body>
 </html>

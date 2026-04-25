@@ -1,26 +1,36 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
-from .models import Actions
+from django.views.generic.edit import FormMixin
+from .models import Actions, Certificate
 from .forms import LeadForms
+from django.urls import reverse_lazy
 
 
-class PoolView(ListView):
+class PoolView(FormMixin, ListView):
     model = Actions
+    form_class = LeadForms
     ordering = '-created_at'
     template_name = 'pool/index.html'
+    success_url = reverse_lazy('main_page')
+
+    def get_queryset(self):
+        return Actions.objects.filter(is_active=True).order_by('-created_at')
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            self.object_list = self.get_queryset()
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        instance = form.save(commit=False)
+        instance._request = self.request
+        instance.save()
+        return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form'] = getattr(self, 'form', LeadForms())
+        context["certificates"] = Certificate.objects.all()
         return context
-
-    def post(self, request, *args, **kwargs):
-        form = LeadForms(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('main_page')
-
-        self.form = form
-        self.object_list = self.get_queryset()
-        context = self.get_context_data()
-        return render(request, self.template_name, context)

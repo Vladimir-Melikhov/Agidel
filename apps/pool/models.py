@@ -18,7 +18,6 @@ class Actions(models.Model):
 
 class Lead(models.Model):
     MESSENGER_CHOICES = [
-        ('none', 'Не выбрано'),
         ('whatsapp', 'WhatsApp'),
         ('telegram', 'Telegram'),
         ('max_m', 'Max'),
@@ -29,10 +28,6 @@ class Lead(models.Model):
     use_messenger =  models.BooleanField("сСвязаться в месенджере", default=False)
     messenger = models.CharField("Выбранный месенджер",max_length=10, choices=MESSENGER_CHOICES,
                                  default='none', blank=True)
-    whatsapp = models.CharField("Аккаунт ватсап", max_length=50, blank=True, null=True)
-    telegram = models.CharField("Аккаунт телеграм", max_length=50, blank=True, null=True)
-    max_m = models.CharField("Аккаунт макс", max_length=50, blank=True, null=True)
-    
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -41,3 +36,17 @@ class Lead(models.Model):
 
     def __str__(self):
         return f'{self.name} - {self.phone_number}'
+
+
+class Certificate(models.Model):
+    img = models.ImageField('Изображение', upload_to='certificate/')
+    title = models.CharField('Наименование', max_length=100, blank=True)
+    order = models.PositiveIntegerField('Порядок', default=0)
+
+    class Meta:
+        verbose_name = 'Сертификат'
+        verbose_name_plural = 'Сертификаты'
+        ordering = ['order']
+
+    def __str__(self):
+        return self.title or f'Сертификат #{self.pk}'
