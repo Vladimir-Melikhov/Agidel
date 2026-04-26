@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .privacy-header {
+        background: var(--blue);
+        padding: 120px 40px 60px;
+        text-align: center;
+    }
+    .privacy-header h1 {
+        font-family: 'Nunito', sans-serif;
+        font-weight: 900;
+        font-size: 2.2rem;
+        color: var(--white);
+    }
+    .privacy-section {
+        padding: 40px 40px 80px;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    .privacy-section h2 {
+        font-family: 'Nunito', sans-serif;
+        font-weight: 900;
+        font-size: 1.2rem;
+        color: var(--dark);
+        margin-top: 32px;
+        margin-bottom: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    .privacy-section p {
+        font-size: 0.95rem;
+        line-height: 1.8;
+        color: var(--dark);
+        margin-bottom: 12px;
+    }
+    .privacy-section ul {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 16px 0;
+    }
+    .privacy-section ul li {
+        position: relative;
+        padding-left: 20px;
+        font-size: 0.93rem;
+        line-height: 1.8;
+        color: var(--dark);
+    }
+    .privacy-section ul li::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 10px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--blue);
+    }
+    .privacy-updated {
+        margin-top: 40px;
+        font-size: 0.82rem;
+        color: #7aacbe;
+        font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+        .privacy-header { padding: 100px 20px 40px; }
+        .privacy-section { padding: 30px 20px 60px; }
+    }
+</style>
+
+<div class="privacy-header">
+    <h1>Политика конфиденциальности</h1>
+</div>
+
+<section class="privacy-section">
+    <p>Настоящая Политика конфиденциальности определяет порядок сбора, хранения, обработки
+    и защиты персональных данных пользователей сайта аквастудии грудничкового
+    и раннего плавания «Агидель».</p>
+
+    <h2>Сбор информации</h2>
+    <p>Администрация сайта может собирать следующую информацию о пользователях:</p>
+    <ul>
+        <li>Фамилия, имя, отчество</li>
+        <li>Возраст и пол</li>
+        <li>Почтовый адрес</li>
+        <li>Адрес электронной почты</li>
+        <li>Номер телефона</li>
+        <li>IP-адрес</li>
+        <li>Прочая информация, добровольно предоставленная пользователем</li>
+    </ul>
+
+    <h2>Использование информации</h2>
+    <p>Личная информация пользователя может использоваться в следующих целях:</p>
+    <ul>
+        <li>Предоставление информации и услуг, запрашиваемых пользователем</li>
+        <li>Обратная связь и ответы на запросы пользователя</li>
+        <li>Улучшение качества услуг и продуктов сайта</li>
+        <li>Формирование статистических данных и внутренняя отчётность</li>
+        <li>Мониторинг работы сайта</li>
+        <li>Разрешение споров и урегулирование претензий</li>
+    </ul>
+
+    <h2>Раскрытие информации</h2>
+    <p>Администрация сайта не продаёт личные данные пользователей и не передаёт
+    их третьим лицам без согласия пользователя, за исключением случаев,
+    предусмотренных действующим законодательством Российской Федерации,
+    а также по запросу уполномоченных государственных органов.</p>
+
+    <h2>Защита данных</h2>
+    <p>Администрация сайта принимает необходимые организационные и технические меры
+    для защиты персональных данных пользователей от неправомерного
+    или случайного доступа, уничтожения, изменения и иных неправомерных действий.</p>
+
+    <h2>Дети</h2>
+    <p>Дети любых возрастов могут беспрепятственно пользоваться данным сайтом.
+    При сборе данных о несовершеннолетних администрация рекомендует участие
+    родителей или законных представителей.</p>
+
+    <h2>Контакты</h2>
+    <p>По вопросам, связанным с обработкой персональных данных, вы можете обратиться
+    по электронной почте: <a href="mailto:agidel_2018@mail.ru" style="color: var(--dark); font-weight: 700;">agidel_2018@mail.ru</a></p>
+
+    <p class="privacy-updated">Последнее обновление: апрель 2026 г.</p>
+</section>
+{% endblock %}

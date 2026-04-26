@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.views.generic import ListView
+from django.views.generic import ListView, TemplateView
 from django.views.generic.edit import FormMixin
 from .models import Actions, Certificate
 from .forms import LeadForms
@@ -34,3 +34,7 @@ class PoolView(FormMixin, ListView):
         context = super().get_context_data(**kwargs)
         context["certificates"] = Certificate.objects.all()
         return context
+
+
+class PoliticView(TemplateView):
+    template_name = "pool/privacy.html"

@@ -1,0 +1,15 @@
+agidel-reutov.ru {
+    handle /static/* {
+        root * /srv
+        file_server
+    }
+
+    handle /media/* {
+        root * /srv
+        file_server
+    }
+
+    handle {
+        reverse_proxy web:8000
+    }
+}
