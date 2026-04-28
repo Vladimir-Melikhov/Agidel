@@ -122,7 +122,7 @@ def send_notification_email(instance, request=None):
             subject='🐥 Новая заявка — Агидель',
             message=f"Новая заявка от {instance.name}, телефон: {instance.phone_number}",
             from_email=EMAIL_HOST_USER,
-            recipient_list=['b1esssed1@yandex.com'],
+            recipient_list=['b1esssed1@yandex.com', 'agidel_2018@mail.ru'],
             html_message=html,
         )
     except SMTPException as e:

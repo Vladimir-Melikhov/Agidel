@@ -38,6 +38,22 @@ class Lead(models.Model):
         return f'{self.name} - {self.phone_number}'
 
 
+class Service(models.Model):
+    title = models.CharField('Наименование', max_length=40)
+    description = models.TextField('Описание', max_length=300)
+    haveprice = models.BooleanField('Без Цены', default=False)
+    price = models.PositiveIntegerField('Цена', blank=True, null=True)
+    order_id = models.PositiveIntegerField('Порядок')
+    is_active = models.BooleanField('Активно', default=False)
+
+    class Meta:
+        verbose_name = "Услуга"
+        verbose_name_plural = "Услуги"
+        ordering = ["order_id"]
+    
+    def __str__(self):
+        return self.title
+
 class Certificate(models.Model):
     img = models.ImageField('Изображение', upload_to='certificate/')
     title = models.CharField('Наименование', max_length=100, blank=True)
