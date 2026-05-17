@@ -47,7 +47,7 @@ class Service(models.Model):
     is_active = models.BooleanField('Активно', default=False)
 
     class Meta:
-        verbose_name = "Услуга"
+        verbose_name = "Услугу"
         verbose_name_plural = "Услуги"
         ordering = ["order_id"]
     

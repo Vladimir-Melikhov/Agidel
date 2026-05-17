@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, TemplateView
 from django.views.generic.edit import FormMixin
-from .models import Actions, Certificate
+from .models import Actions, Certificate, Service
 from .forms import LeadForms
 from django.urls import reverse_lazy
+from django.contrib import messages
 
 
 class PoolView(FormMixin, ListView):
@@ -28,11 +29,18 @@ class PoolView(FormMixin, ListView):
         instance = form.save(commit=False)
         instance._request = self.request
         instance.save()
-        return super().form_valid(form)
+        messages.success(self.request, 'Заявка отправлена! Мы скоро свяжемся с вами.')
+        return redirect(reverse_lazy('main_page') + '#form')
+    
+    def form_invalid(self, form):
+        self.object_list = self.get_queryset()
+        messages.error(self.request, 'Проверьте правильность заполнения формы.')
+        return self.render_to_response(self.get_context_data(form=form))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["certificates"] = Certificate.objects.all()
+        context["services"] = Service.objects.filter(is_active=True)
         return context
 
 

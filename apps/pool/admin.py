@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Actions, Lead, Certificate
+from .models import Actions, Lead, Certificate, Service
 
 
 @admin.register(Actions)
@@ -20,4 +20,15 @@ class CertificateAdmin(admin.ModelAdmin):
     list_display = (
         "img",
         "title"
+    )
+
+@admin.register(Service)
+class ServiceAdmin(admin.ModelAdmin):
+    list_display = (
+        "title",
+        "description",
+        "haveprice",
+        "is_active",
+        "order_id",
+        "price"
     )

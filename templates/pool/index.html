@@ -580,7 +580,7 @@
 
 <section class="hero" id="hero">
     <h1 class="hero-title">АГИДЕЛЬ</h1>
-    <p class="hero-subtitle">Аквастудия грудничкового и раннего плавания</p>
+    <p class="hero-subtitle">Центр детского здоровья</p>
     <img src="/static/img/utka.png" alt="Уточка Агидель" class="hero-duck">
     <a href="#form" class="hero-btn">Записаться на занятие</a>
     <div class="hero-wave">
@@ -653,55 +653,21 @@
         <div class="section-label">Услуги</div>
         <div class="section-title">Наши программы</div>
         <div class="services-grid">
+            {% for service in services %}
             <a href="#form" class="service-card">
-                <div class="service-icon">
-                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                        <path d="M2 14 Q7 9 14 14 Q21 19 26 14" stroke="#87CCE8" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-                        <path d="M2 20 Q7 15 14 20 Q21 25 26 20" stroke="#87CCE8" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.5"/>
-                    </svg>
-                </div>
-                <h3>Грудничковое плавание</h3>
-                <p>Занятия для малышей от 1.5 месяцев. Развитие, закаливание, здоровый сон.</p>
-                <div class="service-price">1 500 ₽ <span>/ занятие</span></div>
+                <h3>{{ service.title }}</h3>
+                <p>{{ service.description }}</p>
+                {% if service.haveprice %}
+                    <div class="service-btn">Уточнить цену</div>
+                {% else %}
+                    <div class="service-price">{{ service.price }} ₽</div>
+                {% endif %}
             </a>
-            <a href="#form" class="service-card">
-                <div class="service-icon">
-                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                        <circle cx="14" cy="8" r="4" fill="#87CCE8"/>
-                        <path d="M6 24 C6 18 10 14 14 14 C18 14 22 18 22 24" stroke="#87CCE8" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-                    </svg>
-                </div>
-                <h3>Индивидуальные тренировки</h3>
-                <p>Персональный подход для каждого ребёнка. Тренер работает только с вами.</p>
-                <div class="service-price">2 500 ₽ <span>/ занятие</span></div>
-            </a>
-            <a href="#form" class="service-card">
-                <div class="service-icon">
-                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                        <rect x="3" y="5" width="22" height="20" rx="4" stroke="#87CCE8" stroke-width="2" fill="none"/>
-                        <path d="M3 11 H25" stroke="#87CCE8" stroke-width="2"/>
-                        <rect x="8" y="15" width="4" height="4" rx="1" fill="#FCE300"/>
-                        <rect x="16" y="15" width="4" height="4" rx="1" fill="#FCE300"/>
-                    </svg>
-                </div>
-                <h3>Абонемент</h3>
-                <p>На 4, 8, 10 или 12 занятий. Срок действия до 2 месяцев.</p>
-                <div class="service-price">от 7 200 ₽</div>
-            </a>
-            <a href="#form" class="service-card">
-                <div class="service-icon">
-                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                        <path d="M3 16 Q14 12 25 16 L23 23 Q14 26 5 23 Z" stroke="#87CCE8" stroke-width="2" fill="none" stroke-linejoin="round"/>
-                        <path d="M10 10 Q11 13 10 16" stroke="#87CCE8" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-                        <path d="M14 8 Q15 12 14 16" stroke="#87CCE8" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-                        <path d="M18 10 Q19 13 18 16" stroke="#87CCE8" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-                        <path d="M22 8 Q25 6 26 10 Q27 14 25 16" stroke="#87CCE8" stroke-width="2" stroke-linecap="round" fill="none"/>
-                    </svg>
-                </div>
-                <h3>Подводный массаж</h3>
-                <p>Гидромассаж струями воды. Восстанавливает подвижность, снимает спазмы.</p>
-                <div class="service-btn">Уточнить цену</div>
-            </a>
+            {% empty %}
+            <p style="color:rgba(255,255,255,0.5); font-family:'Nunito',sans-serif; font-weight:700;">
+                Услуги скоро появятся
+            </p>
+            {% endfor %}
         </div>
     </div>
 </section>
@@ -948,5 +914,10 @@ document.getElementById('popupClose').addEventListener('click', function() {
 document.getElementById('popupBtn').addEventListener('click', function() {
     document.getElementById('popupOverlay').style.display = 'none';
 });
+{% if form.errors %}
+window.addEventListener('load', function() {
+    document.getElementById('form').scrollIntoView({behavior: 'smooth'});
+});
+{% endif %}
 </script>
 {% endblock %}
