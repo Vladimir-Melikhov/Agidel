@@ -1,4 +1,4 @@
-agidel-reutov.ru {
+agidelreutov.ru {
     handle /static/* {
         root * /srv
         file_server

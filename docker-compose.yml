@@ -1,3 +1,4 @@
+
 services:
   db:
     image: postgres:16-alpine
@@ -22,6 +23,7 @@ services:
       DB_PORT: 5432
     restart: unless-stopped
     volumes:
+      - ./static:/app/static
       - static_files:/app/staticfiles
       - media_files:/app/media
     depends_on:

@@ -1,5 +1,5 @@
-from django.core.mail import send_mail
-from smtplib import SMTPException
+
+from django.core.mail import send_mail, get_connection
 import os
 import logging
 from datetime import datetime
@@ -118,13 +118,20 @@ def send_notification_email(instance, request=None):
     """
 
     try:
+        connection = get_connection(
+            fail_silently=False,
+            timeout=5,
+        )
+
         send_mail(
             subject='🐥 Новая заявка — Агидель',
             message=f"Новая заявка от {instance.name}, телефон: {instance.phone_number}",
             from_email=EMAIL_HOST_USER,
             recipient_list=['b1esssed1@yandex.com', 'agidel_2018@mail.ru'],
             html_message=html,
+            connection=connection,
         )
-    except SMTPException as e:
-        logger.error(f'Ошибка отправки на почту: {e}')
+
+    except Exception:
+        logger.exception('Ошибка отправки email')
         raise
