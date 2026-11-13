@@ -75,10 +75,13 @@ class Certificate(models.Model):
 
 class Trainer(models.Model):
     photo = models.ImageField('Фото', upload_to='trainers/')
-    first_name = models.CharField('Имя', max_length=40)
-    last_name = models.CharField('Фамилия', max_length=40)
-    experience = models.CharField('Опыт работы', max_length=60, help_text='Например: 8 лет')
-    approach = models.TextField('Мой подход / моя цель', max_length=500)
+    first_name = models.CharField('Имя', max_length=20)
+    last_name = models.CharField('Фамилия', max_length=25)
+    experience = models.CharField('Опыт работы', max_length=25, help_text='Например: 8 лет')
+    approach = models.TextField(
+        'Мой подход / моя цель', max_length=250,
+        help_text='Не более 250 символов, чтобы все карточки были одинаковыми',
+    )
     order = models.PositiveIntegerField('Порядок', default=0)
     is_active = models.BooleanField('Показывать на сайте', default=True)
 

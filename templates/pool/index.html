@@ -426,36 +426,52 @@
     .trainer-track::-webkit-scrollbar { display: none; }
     .trainer-card {
         flex: 0 0 300px;
+        height: 460px;
         scroll-snap-align: center;
         background: var(--white);
         border-radius: 24px;
-        padding: 28px 24px 26px;
+        padding: 22px 22px 22px;
         text-align: center;
+        display: flex;
+        flex-direction: column;
         box-shadow: 0 8px 32px rgba(12,104,128,0.2);
     }
     .trainer-card img {
-        width: 180px;
-        height: 180px;
+        flex: 0 0 auto;
+        width: 110px;
+        height: 110px;
         object-fit: cover;
         object-position: center top;
-        border-radius: 28px;
+        border-radius: 24px;
         display: block;
-        margin: 0 auto 20px;
+        margin: 0 auto 14px;
         background: #eaf6fb;
         box-shadow: 0 6px 20px rgba(12,104,128,0.18);
     }
-    .trainer-body { padding: 0; }
+    .trainer-body {
+        padding: 0;
+        flex: 1;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
     .trainer-name {
         font-family: 'Nunito', sans-serif;
         font-weight: 900;
-        font-size: 1.1rem;
+        font-size: 1.05rem;
         text-transform: uppercase;
         color: var(--dark);
         line-height: 1.25;
-        margin-bottom: 10px;
+        height: 2.5em;
+        margin-bottom: 8px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
     .trainer-exp {
-        display: inline-block;
+        flex: 0 0 auto;
         background: #EBF7FC;
         color: var(--dark);
         font-family: 'Nunito', sans-serif;
@@ -463,9 +479,14 @@
         font-size: 0.78rem;
         padding: 5px 14px;
         border-radius: 12px;
-        margin-bottom: 16px;
+        margin-bottom: 14px;
+        max-width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
     .trainer-approach-label {
+        flex: 0 0 auto;
         font-family: 'Nunito', sans-serif;
         font-weight: 900;
         font-size: 0.7rem;
@@ -475,10 +496,16 @@
         margin-bottom: 6px;
     }
     .trainer-approach {
-        font-size: 0.9rem;
+        flex: 1;
+        min-height: 0;
+        font-size: 0.92rem;
         font-weight: 600;
         color: #5f93a8;
-        line-height: 1.6;
+        line-height: 1.55;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 9;
+        -webkit-box-orient: vertical;
     }
     .trainer-counter {
         text-align: center;
@@ -643,7 +670,7 @@
         .cert-carousel, .trainer-carousel { gap: 8px; }
         .cert-arrow, .trainer-arrow { width: 40px; height: 40px; font-size: 1.1rem; }
         .cert-track, .cert-card { width: min(280px, calc(100vw - 140px)); }
-        .trainer-card { flex-basis: min(300px, calc(100vw - 140px)); padding: 24px 18px 22px; }
+        .trainer-card { flex-basis: min(300px, calc(100vw - 140px)); padding: 20px 16px; }
         .trainer-track { gap: 16px; }
     }
     .popup-overlay {
