@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, TemplateView
 from django.views.generic.edit import FormMixin
-from .models import Actions, Certificate, Service
+from .models import Actions, Certificate, Service, Trainer
 from .forms import LeadForms
 from django.urls import reverse_lazy
 from django.contrib import messages
+from django.utils import timezone
 
 
 class PoolView(FormMixin, ListView):
@@ -28,6 +29,7 @@ class PoolView(FormMixin, ListView):
     def form_valid(self, form):
         instance = form.save(commit=False)
         instance._request = self.request
+        instance.consent_at = timezone.now()
         instance.save()
         messages.success(self.request, 'Заявка отправлена! Мы скоро свяжемся с вами.')
         return redirect(reverse_lazy('main_page') + '#form')
@@ -40,9 +42,14 @@ class PoolView(FormMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["certificates"] = Certificate.objects.all()
+        context["trainers"] = Trainer.objects.filter(is_active=True)
         context["services"] = Service.objects.filter(is_active=True)
         return context
 
 
 class PoliticView(TemplateView):
     template_name = "pool/privacy.html"
+
+
+class TermsView(TemplateView):
+    template_name = "pool/terms.html"

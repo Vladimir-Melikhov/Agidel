@@ -372,7 +372,7 @@
         color: #7aacbe;
         text-align: center;
     }
-    .cert-arrow {
+    .cert-arrow, .trainer-arrow {
         width: 52px;
         height: 52px;
         border-radius: 50%;
@@ -388,7 +388,7 @@
         justify-content: center;
         backdrop-filter: blur(4px);
     }
-    .cert-arrow:hover { background: rgba(255,255,255,0.4); }
+    .cert-arrow:hover, .trainer-arrow:hover { background: rgba(255,255,255,0.4); }
     .cert-counter {
         text-align: center;
         margin-top: 20px;
@@ -397,6 +397,115 @@
         font-size: 0.85rem;
         color: rgba(255,255,255,0.6);
     }
+
+
+    #trainers {
+        background: var(--blue);
+        padding: 100px 40px;
+    }
+    .trainers-inner { max-width: 1200px; margin: 0 auto; }
+    #trainers .section-label { background: rgba(255,255,255,0.25); color: var(--dark); }
+    #trainers .section-title { color: var(--white); }
+    .trainer-carousel {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 24px;
+    }
+    .trainer-track {
+        display: flex;
+        gap: 24px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        scrollbar-width: none;
+        padding: 8px 4px 24px;
+        margin-bottom: -16px;
+        min-width: 0;
+    }
+    .trainer-track::-webkit-scrollbar { display: none; }
+    .trainer-card {
+        flex: 0 0 280px;
+        scroll-snap-align: center;
+        background: var(--white);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 8px 32px rgba(12,104,128,0.2);
+    }
+    .trainer-card img {
+        width: 100%;
+        height: 320px;
+        object-fit: cover;
+        object-position: top;
+        display: block;
+        background: #eaf6fb;
+    }
+    .trainer-body { padding: 18px 20px 22px; }
+    .trainer-name {
+        font-family: 'Nunito', sans-serif;
+        font-weight: 900;
+        font-size: 1.05rem;
+        text-transform: uppercase;
+        color: var(--dark);
+        line-height: 1.2;
+        margin-bottom: 6px;
+    }
+    .trainer-exp {
+        display: inline-block;
+        background: #EBF7FC;
+        color: var(--dark);
+        font-family: 'Nunito', sans-serif;
+        font-weight: 800;
+        font-size: 0.75rem;
+        padding: 4px 12px;
+        border-radius: 12px;
+        margin-bottom: 12px;
+    }
+    .trainer-approach-label {
+        font-family: 'Nunito', sans-serif;
+        font-weight: 900;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        color: var(--orange);
+        margin-bottom: 4px;
+    }
+    .trainer-approach {
+        font-size: 0.88rem;
+        font-weight: 600;
+        color: #7aacbe;
+        line-height: 1.5;
+    }
+    .trainer-counter {
+        text-align: center;
+        margin-top: 20px;
+        font-family: 'Nunito', sans-serif;
+        font-weight: 700;
+        font-size: 0.85rem;
+        color: rgba(255,255,255,0.6);
+    }
+
+    .consent-block { margin: 4px 0 16px; display: flex; flex-direction: column; gap: 10px; }
+    .consent-item {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        font-size: 0.78rem;
+        font-weight: 600;
+        line-height: 1.4;
+        color: #5b8fa3;
+        cursor: pointer;
+    }
+    .consent-item input[type="checkbox"] {
+        width: 18px; height: 18px;
+        margin-top: 1px;
+        flex-shrink: 0;
+        accent-color: var(--dark);
+        cursor: pointer;
+    }
+    .consent-item a { color: var(--dark); text-decoration: underline; }
+    .consent-error { margin-top: -4px; padding-left: 28px; }
+    .hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
     #form-section {
         background: linear-gradient(135deg, var(--blue) 0%, #5ab8e0 100%);
@@ -522,12 +631,16 @@
 
     @media (max-width: 768px) {
         .section { padding: 60px 20px; }
-        #services, #form-section, #certificates { padding: 60px 20px; }
+        #services, #form-section, #certificates, #trainers { padding: 60px 20px; }
         .about-grid { grid-template-columns: 1fr; }
         .form-wrap { padding: 32px 24px; }
         .hero { padding: 100px 20px 60px; }
         .rules-tabs { flex-direction: column; }
-        .cert-arrow { display: none; }
+        .cert-carousel, .trainer-carousel { gap: 8px; }
+        .cert-arrow, .trainer-arrow { width: 40px; height: 40px; font-size: 1.1rem; }
+        .cert-track, .cert-card { width: min(280px, calc(100vw - 140px)); }
+        .trainer-card { flex-basis: min(280px, calc(100vw - 140px)); }
+        .trainer-track { gap: 16px; }
     }
     .popup-overlay {
         display: none;
@@ -783,12 +896,40 @@
     </div>
 </section>
 
+<section id="trainers">
+    <div class="trainers-inner">
+        <div class="section-label">Команда</div>
+        <div class="section-title">Наши<br>тренеры</div>
+        {% if trainers %}
+        <div class="trainer-carousel">
+            <button class="trainer-arrow" id="trainerPrev" onclick="trainerMove(-1)" aria-label="Назад">&#8592;</button>
+            <div class="trainer-track" id="trainerTrack">
+                {% for t in trainers %}
+                <div class="trainer-card">
+                    <img src="{{ t.photo.url }}" alt="{{ t.first_name }} {{ t.last_name }}" loading="lazy">
+                    <div class="trainer-body">
+                        <div class="trainer-name">{{ t.first_name }} {{ t.last_name }}</div>
+                        <div class="trainer-exp">Опыт: {{ t.experience }}</div>
+                        <div class="trainer-approach-label">Мой подход / цель</div>
+                        <p class="trainer-approach">{{ t.approach }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <button class="trainer-arrow" id="trainerNext" onclick="trainerMove(1)" aria-label="Вперёд">&#8594;</button>
+        </div>
+        {% else %}
+        <p style="color:rgba(255,255,255,0.5);font-family:'Nunito',sans-serif;font-weight:700;">Информация о тренерах скоро появится</p>
+        {% endif %}
+    </div>
+</section>
+
 <section id="certificates">
     <div class="cert-inner">
         <div class="section-label">Документы</div>
         <div class="section-title">Сертификаты<br>и дипломы</div>
         <div class="cert-carousel">
-            <button class="cert-arrow" onclick="certMove(-1)">&#8592;</button>
+            <button class="cert-arrow" onclick="certMove(-1)" aria-label="Назад">&#8592;</button>
             <div class="cert-track" id="certTrack">
                 {% for cert in certificates %}
                 <div class="cert-card">
@@ -799,7 +940,7 @@
                 <p style="color:rgba(255,255,255,0.5);font-family:'Nunito',sans-serif;font-weight:700;">Сертификаты скоро появятся</p>
                 {% endfor %}
             </div>
-            <button class="cert-arrow" onclick="certMove(1)">&#8594;</button>
+            <button class="cert-arrow" onclick="certMove(1)" aria-label="Вперёд">&#8594;</button>
         </div>
         <div class="cert-counter" id="certCounter"></div>
     </div>
@@ -841,10 +982,29 @@
                         {% endif %}
                     </div>
                 </div>
+                <div class="hp-field" aria-hidden="true">
+                    <label>Не заполняйте это поле</label>
+                    <input type="text" name="website" tabindex="-1" autocomplete="off">
+                </div>
+                <div class="consent-block">
+                    <label class="consent-item">
+                        {{ form.consent_personal_data }}
+                        <span>Я даю <a href="{% url 'politics' %}#consent" target="_blank">согласие на обработку моих персональных данных</a> в соответствии с Политикой конфиденциальности (152-ФЗ) <b style="color:#e53935">*</b></span>
+                    </label>
+                    {% if form.consent_personal_data.errors %}<div class="form-errors consent-error">{{ form.consent_personal_data.errors }}</div>{% endif %}
+                    <label class="consent-item">
+                        {{ form.consent_terms }}
+                        <span>Я принимаю условия <a href="{% url 'terms' %}" target="_blank">Пользовательского соглашения</a> и ознакомился с <a href="{% url 'politics' %}" target="_blank">Политикой конфиденциальности</a> <b style="color:#e53935">*</b></span>
+                    </label>
+                    {% if form.consent_terms.errors %}<div class="form-errors consent-error">{{ form.consent_terms.errors }}</div>{% endif %}
+                    <label class="consent-item">
+                        {{ form.consent_marketing }}
+                        <span>Я согласен получать информационные сообщения об акциях и новостях студии (необязательно)</span>
+                    </label>
+                </div>
                 <button type="submit" class="form-submit">Записаться на занятие</button>
-                <p style="text-align:center; font-size:0.75rem; color:#7aacbe; margin-top:12px; font-weight:600;">
-                    Нажимая кнопку, вы соглашаетесь с
-                    <a href="{% url 'politics' %}" target="_blank" style="color:var(--dark); text-decoration:underline;">политикой конфиденциальности</a>
+                <p style="text-align:center; font-size:0.72rem; color:#7aacbe; margin-top:12px; font-weight:600;">
+                    <b style="color:#e53935">*</b> — обязательные поля. Согласие можно отозвать, написав на agidel_2018@mail.ru
                 </p>
             </form>
         </div>
@@ -887,7 +1047,85 @@
             update();
         };
 
+        // свайп на мобильных
+        let startX = null;
+        track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, {passive: true});
+        track.addEventListener('touchend', e => {
+            if (startX === null) return;
+            const dx = e.changedTouches[0].clientX - startX;
+            if (Math.abs(dx) > 40) certMove(dx < 0 ? 1 : -1);
+            startX = null;
+        });
+
         update();
+    })();
+
+    (function() {
+        const track = document.getElementById('trainerTrack');
+        if (!track) return;
+        const prev = document.getElementById('trainerPrev');
+        const next = document.getElementById('trainerNext');
+        const cards = track.querySelectorAll('.trainer-card');
+
+        function step() {
+            const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+            return cards[0].offsetWidth + gap;
+        }
+        window.trainerMove = function(dir) {
+            const max = track.scrollWidth - track.clientWidth;
+            // по кругу: в конце возвращаемся в начало и наоборот
+            if (dir > 0 && track.scrollLeft >= max - 4) track.scrollTo({left: 0});
+            else if (dir < 0 && track.scrollLeft <= 4) track.scrollTo({left: max});
+            else track.scrollBy({left: dir * step()});
+        };
+        function toggleArrows() {
+            const overflow = track.scrollWidth > track.clientWidth + 4;
+            [prev, next].forEach(b => { b.style.visibility = overflow ? 'visible' : 'hidden'; });
+        }
+        window.addEventListener('resize', toggleArrows);
+        toggleArrows();
+    })();
+
+    // Маска телефона: +7 стоит всегда, дальше вводятся 10 цифр
+    (function() {
+        var input = document.querySelector('input[name="phone_number"]');
+        if (!input) return;
+        input.setAttribute('type', 'tel');
+        input.setAttribute('inputmode', 'tel');
+        input.setAttribute('autocomplete', 'tel');
+        input.setAttribute('maxlength', '18');
+        input.setAttribute('placeholder', '+7 (___) ___-__-__');
+
+        function format(raw) {
+            var d = raw.replace(/\D/g, '');
+            // вставка вида 8906... или 7906... или +7906...
+            if (d.length > 10 && (d[0] === '7' || d[0] === '8')) d = d.slice(1);
+            else if (d[0] === '7' && raw.indexOf('+7') === 0) d = d.slice(1);
+            d = d.slice(0, 10);
+            var out = '+7';
+            if (d.length) out += ' (' + d.slice(0, 3);
+            if (d.length >= 3) out += ')';
+            if (d.length > 3) out += ' ' + d.slice(3, 6);
+            if (d.length > 6) out += '-' + d.slice(6, 8);
+            if (d.length > 8) out += '-' + d.slice(8, 10);
+            return out;
+        }
+        function apply() { input.value = format(input.value); }
+
+        input.addEventListener('focus', function() {
+            if (!input.value) input.value = '+7 ';
+            setTimeout(function() { input.setSelectionRange(input.value.length, input.value.length); });
+        });
+        input.addEventListener('input', apply);
+        input.addEventListener('keydown', function(e) {
+            // не даём стереть префикс +7
+            if (e.key === 'Backspace' && input.value.replace(/\D/g, '').length <= 1 &&
+                input.selectionStart <= 3) e.preventDefault();
+        });
+        input.addEventListener('blur', function() {
+            if (input.value.replace(/\D/g, '').length <= 1) input.value = '';
+        });
+        if (input.value) apply();
     })();
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -899,21 +1137,39 @@
         checkbox.addEventListener('change', updateVisibility);
         updateVisibility();
     });
-    // Через 20 секунд показываем попап
-setTimeout(function() {
-    var overlay = document.getElementById('popupOverlay');
-    if (overlay) overlay.style.display = 'flex';
-}, 20000);
 
-// Клик на крестик — скрываем
-document.getElementById('popupClose').addEventListener('click', function() {
-    document.getElementById('popupOverlay').style.display = 'none';
-});
+    // Попап с предложением записаться: не чаще одного раза в 10 минут
+    (function() {
+        var KEY = 'agidelPopupShownAt';
+        var INTERVAL = 10 * 60 * 1000;
+        var overlay = document.getElementById('popupOverlay');
+        if (!overlay) return;
 
-// Клик на кнопку "Записаться" — тоже скрываем (и якорь #form прокрутит к форме)
-document.getElementById('popupBtn').addEventListener('click', function() {
-    document.getElementById('popupOverlay').style.display = 'none';
-});
+        function lastShown() {
+            try { return parseInt(localStorage.getItem(KEY), 10) || 0; } catch (e) { return 0; }
+        }
+        function markShown() {
+            try { localStorage.setItem(KEY, String(Date.now())); } catch (e) {}
+        }
+        function hide() { overlay.style.display = 'none'; }
+
+        var wait = Math.max(20000, lastShown() + INTERVAL - Date.now());
+        setTimeout(function() {
+            // не мешаем, если пользователь уже у формы
+            var f = document.getElementById('form-section').getBoundingClientRect();
+            if (f.top < window.innerHeight && f.bottom > 0) return;
+            // заявка уже отправлена — не предлагаем снова
+            if (document.querySelector('.message.success')) { markShown(); return; }
+            if (Date.now() - lastShown() < INTERVAL) return;
+            overlay.style.display = 'flex';
+            markShown();
+        }, wait);
+
+        document.getElementById('popupClose').addEventListener('click', hide);
+        document.getElementById('popupBtn').addEventListener('click', hide);
+        overlay.addEventListener('click', function(e) { if (e.target === overlay) hide(); });
+    })();
+
 {% if form.errors %}
 window.addEventListener('load', function() {
     document.getElementById('form').scrollIntoView({behavior: 'smooth'});

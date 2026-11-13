@@ -1,7 +1,8 @@
 from django.urls import path
-from .views import PoolView, PoliticView
+from .views import PoolView, PoliticView, TermsView
 
 urlpatterns = [
     path("", PoolView.as_view(), name='main_page'),
-    path("politics/", PoliticView.as_view(), name='politics')
+    path("politics/", PoliticView.as_view(), name='politics'),
+    path("terms/", TermsView.as_view(), name='terms'),
 ]

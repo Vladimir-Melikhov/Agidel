@@ -24,10 +24,14 @@ class Lead(models.Model):
     ]
 
     name = models.CharField("Имя", max_length=20)
-    phone_number = models.CharField("Номер телефона", max_length=15)
-    use_messenger =  models.BooleanField("сСвязаться в месенджере", default=False)
-    messenger = models.CharField("Выбранный месенджер",max_length=10, choices=MESSENGER_CHOICES,
-                                 default='none', blank=True)
+    phone_number = models.CharField("Номер телефона", max_length=20)
+    use_messenger = models.BooleanField("Связаться в мессенджере", default=False)
+    messenger = models.CharField("Выбранный мессенджер", max_length=10, choices=MESSENGER_CHOICES,
+                                 blank=True)
+    consent_personal_data = models.BooleanField("Согласие на обработку персональных данных", default=False)
+    consent_terms = models.BooleanField("Согласие с пользовательским соглашением", default=False)
+    consent_marketing = models.BooleanField("Согласие на информационные сообщения", default=False)
+    consent_at = models.DateTimeField("Время согласия", null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -66,3 +70,22 @@ class Certificate(models.Model):
 
     def __str__(self):
         return self.title or f'Сертификат #{self.pk}'
+
+
+
+class Trainer(models.Model):
+    photo = models.ImageField('Фото', upload_to='trainers/')
+    first_name = models.CharField('Имя', max_length=40)
+    last_name = models.CharField('Фамилия', max_length=40)
+    experience = models.CharField('Опыт работы', max_length=60, help_text='Например: 8 лет')
+    approach = models.TextField('Мой подход / моя цель', max_length=500)
+    order = models.PositiveIntegerField('Порядок', default=0)
+    is_active = models.BooleanField('Показывать на сайте', default=True)
+
+    class Meta:
+        verbose_name = 'Тренер'
+        verbose_name_plural = 'Тренеры'
+        ordering = ['order']
+
+    def __str__(self):
+        return f'{self.first_name} {self.last_name}'

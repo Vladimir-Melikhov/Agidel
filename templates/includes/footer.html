@@ -65,6 +65,27 @@
     .message.success { background: var(--dark); color: #fff; }
     .message.warning { background: var(--orange); color: #fff; }
 
+    .message { cursor: pointer; transition: opacity 0.5s, transform 0.5s; }
+    .message.hide { opacity: 0; transform: translateY(12px); }
+    .footer-links {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px 20px;
+        margin-bottom: 16px;
+    }
+    .footer-links a {
+        color: var(--blue);
+        font-size: 0.82rem;
+        font-weight: 600;
+        opacity: 0.7;
+        text-decoration: underline;
+    }
+    .footer-links a:hover { opacity: 1; }
+    @media (max-width: 768px) {
+        .messages-wrap { left: 16px; right: 16px; bottom: 16px; }
+    }
+
     @keyframes slideIn {
         from { transform: translateX(80px); opacity: 0; }
         to   { transform: translateX(0);    opacity: 1; }
@@ -89,4 +110,22 @@
         <span class="footer-contact">Московская область, г. Реутов,<br>Юбилейный пр., д. 59, пом. 5</span>
     </div>
 
+    <div class="footer-links">
+        <a href="{% url 'politics' %}">Политика конфиденциальности</a>
+        <a href="{% url 'terms' %}">Пользовательское соглашение</a>
+        <a href="#" onclick="openCookieSettings(); return false;">Настройки cookie</a>
+    </div>
+    <div class="footer-copy">© {% now "Y" %} Агидель. Все права защищены.</div>
 </footer>
+
+<script>
+    // Уведомления скрываются сами через 4 секунды (или по клику)
+    document.querySelectorAll('.message').forEach(function (el) {
+        function close() {
+            el.classList.add('hide');
+            setTimeout(function () { el.remove(); }, 500);
+        }
+        el.addEventListener('click', close);
+        setTimeout(close, 4000);
+    });
+</script>
