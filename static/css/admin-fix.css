@@ -1,0 +1,9 @@
+/* Заголовки блоков на главной не должны упираться в скруглённые углы */
+.module caption {
+    padding: 4px 14px 10px;
+    overflow: visible;
+}
+.module caption a {
+    display: inline-block;
+    padding: 2px 0;
+}

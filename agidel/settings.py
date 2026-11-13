@@ -124,7 +124,11 @@ UNFOLD = {
          "href": lambda request: static("img/utka.png")},
     ],
     "SHOW_HISTORY": True,
-    "BORDER_RADIUS": "14px",
+    "THEME": "light",
+    "BORDER_RADIUS": "10px",
+    "STYLES": [
+        lambda request: static("css/admin-fix.css"),
+    ],
     "COLORS": {
         "primary": {
             "50": "#eef9fd", "100": "#d6f0f9", "200": "#b2e3f3",
