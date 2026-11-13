@@ -1,5 +1,7 @@
 import os
 from pathlib import Path
+
+from django.templatetags.static import static
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -15,6 +17,7 @@ ALLOWED_HOSTS = [
 ]
 
 INSTALLED_APPS = [
+    "unfold",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -108,3 +111,26 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+UNFOLD = {
+    "SITE_TITLE": "Агидель",
+    "SITE_HEADER": "Агидель",
+    "SITE_SUBHEADER": "Управление сайтом",
+    "SITE_SYMBOL": "pool",
+    "SITE_ICON": lambda request: static("img/utka.png"),
+    "SITE_FAVICONS": [
+        {"rel": "icon", "sizes": "32x32", "type": "image/png",
+         "href": lambda request: static("img/utka.png")},
+    ],
+    "SHOW_HISTORY": True,
+    "BORDER_RADIUS": "14px",
+    "COLORS": {
+        "primary": {
+            "50": "#eef9fd", "100": "#d6f0f9", "200": "#b2e3f3",
+            "300": "#87cce8", "400": "#52b1d4", "500": "#2793b9",
+            "600": "#1a789a", "700": "#0f6580", "800": "#115368",
+            "900": "#124557", "950": "#0a2c39",
+        },
+    },
+}
