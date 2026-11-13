@@ -425,30 +425,34 @@
     }
     .trainer-track::-webkit-scrollbar { display: none; }
     .trainer-card {
-        flex: 0 0 280px;
+        flex: 0 0 300px;
         scroll-snap-align: center;
         background: var(--white);
-        border-radius: 20px;
-        overflow: hidden;
+        border-radius: 24px;
+        padding: 28px 24px 26px;
+        text-align: center;
         box-shadow: 0 8px 32px rgba(12,104,128,0.2);
     }
     .trainer-card img {
-        width: 100%;
-        height: 320px;
+        width: 180px;
+        height: 180px;
         object-fit: cover;
-        object-position: top;
+        object-position: center top;
+        border-radius: 28px;
         display: block;
+        margin: 0 auto 20px;
         background: #eaf6fb;
+        box-shadow: 0 6px 20px rgba(12,104,128,0.18);
     }
-    .trainer-body { padding: 18px 20px 22px; }
+    .trainer-body { padding: 0; }
     .trainer-name {
         font-family: 'Nunito', sans-serif;
         font-weight: 900;
-        font-size: 1.05rem;
+        font-size: 1.1rem;
         text-transform: uppercase;
         color: var(--dark);
-        line-height: 1.2;
-        margin-bottom: 6px;
+        line-height: 1.25;
+        margin-bottom: 10px;
     }
     .trainer-exp {
         display: inline-block;
@@ -456,10 +460,10 @@
         color: var(--dark);
         font-family: 'Nunito', sans-serif;
         font-weight: 800;
-        font-size: 0.75rem;
-        padding: 4px 12px;
+        font-size: 0.78rem;
+        padding: 5px 14px;
         border-radius: 12px;
-        margin-bottom: 12px;
+        margin-bottom: 16px;
     }
     .trainer-approach-label {
         font-family: 'Nunito', sans-serif;
@@ -468,13 +472,13 @@
         text-transform: uppercase;
         letter-spacing: 1.5px;
         color: var(--orange);
-        margin-bottom: 4px;
+        margin-bottom: 6px;
     }
     .trainer-approach {
-        font-size: 0.88rem;
+        font-size: 0.9rem;
         font-weight: 600;
-        color: #7aacbe;
-        line-height: 1.5;
+        color: #5f93a8;
+        line-height: 1.6;
     }
     .trainer-counter {
         text-align: center;
@@ -639,7 +643,7 @@
         .cert-carousel, .trainer-carousel { gap: 8px; }
         .cert-arrow, .trainer-arrow { width: 40px; height: 40px; font-size: 1.1rem; }
         .cert-track, .cert-card { width: min(280px, calc(100vw - 140px)); }
-        .trainer-card { flex-basis: min(280px, calc(100vw - 140px)); }
+        .trainer-card { flex-basis: min(300px, calc(100vw - 140px)); padding: 24px 18px 22px; }
         .trainer-track { gap: 16px; }
     }
     .popup-overlay {
